@@ -1,0 +1,95 @@
+# Cursors Rule – Directives Architecturales
+
+## Technologies Utilisées
+
+- **Next.js 15**  
+  Utilisation de l’**App Router** pour un rendu optimisé et performant.
+- **React 19**  
+  La gestion des références a évolué : il n'est plus nécessaire d'utiliser `forwardRef` et il suffit de passer la ref comme prop.
+- **ShadCN UI**  
+  Adoption de composants UI modernes et accessibles basés sur Radix UI.
+- **TypeScript**  
+  Typage strict pour un code robuste et maintenable.
+- **Tailwind CSS**  
+  Styling rapide et efficace avec une approche utility-first.
+
+---
+
+## Organisation du Projet
+
+Le projet suit une architecture claire et modulaire, exploitant les meilleures pratiques de **Next.js 15** et **React 19**.
+
+### Structure des Dossiers
+
+```plaintext
+src/
+ ┣ app/
+ ┃ ┣ dashboard/         # Espace utilisateur protégé après connexion
+ ┃ ┣ (auth)/              # Pages d’authentification (Login, Register)
+ ┃ ┣ api/                 # API Routes pour les actions côté serveur
+ ┃ ┣ layout.tsx           # Layout global
+ ┃ ┗ page.tsx             # Page d’accueil
+ ┣ components/          # Composants réutilisables (ShadCN UI)
+ ┣ lib/                 # Fonctions utilitaires et helpers
+
+```
+
+## Détails des Modules
+
+- **`app/(dashboard)/`**  
+  Contient l’espace utilisateur protégé après connexion.
+
+- **`app/(auth)/`**  
+  Gère l’authentification avec **NextAuth** et une base de données locale **LowDB**.
+
+- **`app/api/`**  
+  Regroupe les routes API pour gérer les données (CRUD, authentification, etc.).
+
+- **`app/components/`**  
+  Stocke les composants UI **ShadCN** réutilisables.
+
+- **`app/lib/`**  
+  Contient les fonctions helpers et utilitaires (gestion des dates, formatage, etc.).
+
+- **`app/styles/`**  
+  Contient la configuration globale de **Tailwind CSS**.
+
+## Bonnes Pratiques
+
+1. **Utilisation exclusive de l’App Router**
+
+   - Utilisez uniquement le **App Router** (pas de dossier `pages/`).
+   - Exploitez les **Server Components** et **Server Actions** pour un rendu optimisé.
+
+2. **Gestion des Refs avec React 19**
+   - Dans React 19, il n’est plus nécessaire d’envelopper vos composants avec `forwardRef`.
+   - Passez simplement la `ref` comme prop :
+   ```tsx
+   const MyInput = (props) => {
+     return <input {...props} ref={props.ref} />;
+   };
+   ```
+3. - **Utilisation de LowDB**
+
+- Utilisez **LowDB** pour une base de données ultra-légère, idéale pour un quick win.
+- Stockage local en JSON sans configuration serveur complexe.
+
+4.  **Gestion des États avec Server Actions**
+
+- Remplacez les mutations d’état côté client par des actions exécutées côté serveur.
+
+```tsx
+"use server";  export async function createTask(data: FormData) {   const title = data.get("title");
+```
+
+5. **Utilisation des Composants ShadCN UI**
+
+- Exploitez les composants de **ShadCN UI** pour obtenir une interface moderne et accessible.
+- Exemple avec un composant Button :
+
+```tsx
+import { Button } from "@/components/ui/button";
+export default function Page() {
+  return <Button>Créer une tâche</Button>;
+}
+```
