@@ -1,20 +1,22 @@
 {
   "users": [
     {
-      "id": "eed173f1-dcc3-4914-82cf-4674d1e1cc18",
+      "id": "08360f0b-7d2a-4e50-8eab-1dad5eba46b8",
       "name": "Utilisateur Standard",
       "email": "user@gmail.com",
       "role": "user",
-      "createdAt": "2025-02-26T05:50:06.348Z",
-      "updatedAt": "2025-02-26T05:50:06.348Z"
+      "password": "password",
+      "createdAt": "2025-02-26T06:21:22.162Z",
+      "updatedAt": "2025-02-26T06:21:22.162Z"
     },
     {
-      "id": "83d648d9-401c-4b42-8c90-978459cb6278",
+      "id": "0a4bbf40-f4d5-477f-8536-76305c8f6e5d",
       "name": "Administrateur",
       "email": "admin@gmail.com",
       "role": "admin",
-      "createdAt": "2025-02-26T05:50:06.348Z",
-      "updatedAt": "2025-02-26T05:50:06.348Z"
+      "password": "password",
+      "createdAt": "2025-02-26T06:21:22.162Z",
+      "updatedAt": "2025-02-26T06:21:22.162Z"
     }
   ]
 }
