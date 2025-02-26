@@ -14,8 +14,11 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import DashboardPage from "./dashboard";
+import { getUserByEmail } from "@/db";
 
-export default function Page() {
+export default async function Page() {
+  const user = await getUserByEmail("admin@gmail.com");
+  console.log(user);
   return (
     <SidebarProvider>
       <AppSidebar />
