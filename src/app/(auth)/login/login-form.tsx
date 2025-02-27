@@ -1,36 +1,33 @@
-"use client";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+'use client'
+import React from 'react'
+import {cn} from '@/lib/utils'
+import {Button} from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { login } from "../action";
-import { useState } from "react";
+} from '@/components/ui/card'
+import {Input} from '@/components/ui/input'
+import {Label} from '@/components/ui/label'
+import {login} from '../action'
+import {useState} from 'react'
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const [error, setError] = useState<string | null>(null);
+export function LoginForm({className, ...props}: React.ComponentProps<'div'>) {
+  const [error, setError] = useState<string | null>(null)
 
   async function handleSubmit(formData: FormData) {
-    setError(null);
-    const result = await login(formData);
+    setError(null)
+    const result = await login(formData)
 
     if (result && !result.success) {
-      setError(result.message);
+      setError(result.message)
     }
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Bienvenue</CardTitle>
@@ -52,6 +49,7 @@ export function LoginForm({
                   </svg>
                   Login with Apple
                 </Button>
+
                 <Button variant="outline" className="w-full">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -74,7 +72,7 @@ export function LoginForm({
                     id="email"
                     name="email"
                     type="email"
-                    defaultValue={"user@gmail.com"}
+                    defaultValue={'user@gmail.com'}
                     placeholder="user@gmail.com"
                     required
                   />
@@ -101,7 +99,7 @@ export function LoginForm({
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Pas encore de compte?{" "}
+                Pas encore de compte?{' '}
                 <a href="/register" className="underline underline-offset-4">
                   S&apos;inscrire
                 </a>
@@ -111,9 +109,9 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
+        By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
         and <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  );
+  )
 }

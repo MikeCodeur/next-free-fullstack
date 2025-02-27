@@ -1,46 +1,46 @@
-import { ModeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
+import {ModeToggle} from '@/components/theme-toggle'
+import {Button} from '@/components/ui/button'
 
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+    <div className="flex min-h-screen w-full flex-col overflow-x-hidden">
       {/* Navigation - Ajusté pour supprimer l'espace */}
-      <header className="w-full flex items-center justify-between py-4 border-b px-4 sm:px-6 lg:px-8">
+      <header className="flex w-full items-center justify-between border-b px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-4 sm:gap-8">
-          <Link href="/" className="font-bold text-xl">
+          <Link href="/" className="text-xl font-bold">
             Resend
           </Link>
 
-          <nav className="hidden md:flex items-center gap-4 lg:gap-6">
+          <nav className="hidden items-center gap-4 md:flex lg:gap-6">
             <Link
               href="#"
-              className="text-sm text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm"
             >
               Fonctionnalités
             </Link>
             <Link
               href="#"
-              className="text-sm text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm"
             >
               Entreprise
             </Link>
             <Link
               href="#"
-              className="text-sm text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm"
             >
               Ressources
             </Link>
             <Link
               href="#"
-              className="text-sm text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm"
             >
               Documentation
             </Link>
             <Link
               href="#"
-              className="text-sm text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm"
             >
               Tarifs
             </Link>
@@ -50,13 +50,13 @@ export default function Home() {
         <div className="flex items-center gap-2 sm:gap-4">
           <Link
             href="/login"
-            className="text-sm hover:underline hidden sm:inline-block"
+            className="hidden text-sm hover:underline sm:inline-block"
           >
             Connexion
           </Link>
           <Link
             href="/register"
-            className="text-sm hover:underline hidden sm:inline-block"
+            className="hidden text-sm hover:underline sm:inline-block"
           >
             S&apos;inscrire
           </Link>
@@ -69,11 +69,11 @@ export default function Home() {
       </header>
 
       {/* Hero Section - Ajusté pour supprimer l'espace */}
-      <main className="flex-1 w-full">
-        <section className="w-full flex flex-col items-center justify-center py-10 sm:py-20 text-center px-4 sm:px-6 lg:px-8">
+      <main className="w-full flex-1">
+        <section className="flex w-full flex-col items-center justify-center px-4 py-10 text-center sm:px-6 sm:py-20 lg:px-8">
           {/* Email Icon - Responsive */}
-          <div className="relative w-24 h-24 sm:w-32 sm:h-32 mb-6 sm:mb-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-3xl flex items-center justify-center shadow-lg">
-            <div className="w-12 h-10 sm:w-16 sm:h-12 border-2 border-black dark:border-white rounded-md flex items-center justify-center">
+          <div className="relative mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-amber-500 to-amber-600 shadow-lg sm:mb-10 sm:h-32 sm:w-32">
+            <div className="flex h-10 w-12 items-center justify-center rounded-md border-2 border-black sm:h-12 sm:w-16 dark:border-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -106,34 +106,34 @@ export default function Home() {
           </div>
 
           {/* Hero Text - Responsive */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+          <h1 className="mb-4 text-3xl font-bold sm:mb-6 sm:text-4xl md:text-5xl">
             Intégrez <span className="text-amber-500">cet après-midi</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl max-w-2xl mb-8 sm:mb-12 text-muted-foreground">
+          <p className="text-muted-foreground mb-8 max-w-2xl text-base sm:mb-12 sm:text-lg md:text-xl">
             Une interface simple et élégante pour commencer à envoyer des emails
             en quelques minutes. S&apos;intègre facilement dans votre code avec
             des SDKs pour vos langages de programmation préférés.
           </p>
 
           {/* Language Icons - Meilleure disposition mobile */}
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11 gap-2 sm:gap-4 mb-8 sm:mb-12 w-full max-w-3xl">
+          <div className="mb-8 grid w-full max-w-3xl grid-cols-3 gap-2 sm:mb-12 sm:grid-cols-4 sm:gap-4 md:grid-cols-6 lg:grid-cols-11">
             {[
-              "Node.js",
-              "Serverless",
-              "Ruby",
-              "Python",
-              "PHP",
-              "Go",
-              "Rust",
-              "Java",
-              "Elixir",
-              ".NET",
-              "SMTP",
+              'Node.js',
+              'Serverless',
+              'Ruby',
+              'Python',
+              'PHP',
+              'Go',
+              'Rust',
+              'Java',
+              'Elixir',
+              '.NET',
+              'SMTP',
             ].map((lang) => (
               <div key={lang} className="flex flex-col items-center gap-2">
-                <div className="w-14 h-14 rounded-md border border-border flex items-center justify-center">
+                <div className="border-border flex h-14 w-14 items-center justify-center rounded-md border">
                   <span className="text-xs">
-                    {lang === "Node.js" ? "JS" : lang === ".NET" ? "NET" : lang}
+                    {lang === 'Node.js' ? 'JS' : lang === '.NET' ? 'NET' : lang}
                   </span>
                 </div>
                 <span className="text-xs">{lang}</span>
@@ -142,14 +142,14 @@ export default function Home() {
           </div>
 
           {/* Code Example - Plus adapté au mobile */}
-          <div className="w-full max-w-3xl bg-black text-white rounded-lg overflow-hidden text-left">
-            <div className="flex items-center px-2 sm:px-4 py-2 bg-black/80 border-b border-gray-700">
-              <div className="bg-amber-500 text-black px-2 py-1 rounded text-xs mr-2">
+          <div className="w-full max-w-3xl overflow-hidden rounded-lg bg-black text-left text-white">
+            <div className="flex items-center border-b border-gray-700 bg-black/80 px-2 py-2 sm:px-4">
+              <div className="mr-2 rounded bg-amber-500 px-2 py-1 text-xs text-black">
                 Node.js
               </div>
-              <div className="text-gray-400 text-xs">Next.js</div>
+              <div className="text-xs text-gray-400">Next.js</div>
             </div>
-            <pre className="p-3 sm:p-6 overflow-x-auto text-xs sm:text-sm font-mono">
+            <pre className="overflow-x-auto p-3 font-mono text-xs sm:p-6 sm:text-sm">
               <code>{`import { Resend } from 'resend';
 
 const resend = new Resend('re_123456789');
@@ -173,5 +173,5 @@ const resend = new Resend('re_123456789');
         </section>
       </main>
     </div>
-  );
+  )
 }

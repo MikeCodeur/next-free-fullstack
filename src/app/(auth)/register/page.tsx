@@ -1,6 +1,6 @@
-import { GalleryVerticalEnd } from "lucide-react";
-import { RegisterForm } from "./register-form";
-import React from "react";
+import {GalleryVerticalEnd} from 'lucide-react'
+import {RegisterForm} from './register-form'
+import React from 'react'
 
 export default function RegisterPage() {
   return (
@@ -15,5 +15,5 @@ export default function RegisterPage() {
         <RegisterForm />
       </div>
     </div>
-  );
+  )
 }

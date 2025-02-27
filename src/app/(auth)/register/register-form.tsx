@@ -1,36 +1,36 @@
-"use client";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+'use client'
+import React from 'react'
+import {cn} from '@/lib/utils'
+import {Button} from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { register } from "../action";
-import { useState } from "react";
+} from '@/components/ui/card'
+import {Input} from '@/components/ui/input'
+import {Label} from '@/components/ui/label'
+import {register} from '../action'
+import {useState} from 'react'
 
 export function RegisterForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
-  const [error, setError] = useState<string | null>(null);
+}: React.ComponentProps<'div'>) {
+  const [error, setError] = useState<string | null>(null)
 
   async function handleSubmit(formData: FormData) {
-    setError(null);
-    const result = await register(formData);
+    setError(null)
+    const result = await register(formData)
 
     if (result && !result.success) {
-      setError(result.message);
+      setError(result.message)
     }
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Créer un compte</CardTitle>
@@ -81,7 +81,7 @@ export function RegisterForm({
                 S&apos;inscrire
               </Button>
               <div className="text-center text-sm">
-                Vous avez déjà un compte?{" "}
+                Vous avez déjà un compte?{' '}
                 <a href="/login" className="underline underline-offset-4">
                   Se connecter
                 </a>
@@ -91,10 +91,10 @@ export function RegisterForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        En vous inscrivant, vous acceptez nos{" "}
-        <a href="#">Conditions d&apos;utilisation</a> et notre{" "}
+        En vous inscrivant, vous acceptez nos{' '}
+        <a href="#">Conditions d&apos;utilisation</a> et notre{' '}
         <a href="#">Politique de confidentialité</a>.
       </div>
     </div>
-  );
+  )
 }

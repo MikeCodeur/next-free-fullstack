@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/app-sidebar";
+import {AppSidebar} from '@/components/app-sidebar'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,19 +6,19 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/breadcrumb'
+import {Separator} from '@/components/ui/separator'
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
-import DashboardPage from "./dashboard";
-import { getUserByEmail } from "@/db";
+} from '@/components/ui/sidebar'
+import DashboardPage from './dashboard'
+import {getUserByEmail} from '@/db'
 
 export default async function Page() {
-  const user = await getUserByEmail("admin@gmail.com");
-  console.log(user);
+  const user = await getUserByEmail('admin@gmail.com')
+  console.log(user)
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -56,5 +56,5 @@ export default async function Page() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  );
+  )
 }
