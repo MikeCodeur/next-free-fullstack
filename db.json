@@ -17,6 +17,15 @@
       "password": "password",
       "createdAt": "2025-02-26T06:21:22.162Z",
       "updatedAt": "2025-02-26T06:21:22.162Z"
+    },
+    {
+      "id": "d0f6eae2-9184-4edb-8a1c-534d11bf8f0b",
+      "name": "aaa",
+      "email": "aaa@aaa.fr",
+      "password": "password",
+      "role": "user",
+      "createdAt": "2025-02-28T06:17:10.010Z",
+      "updatedAt": "2025-02-28T06:17:10.010Z"
     }
   ]
 }

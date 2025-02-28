@@ -9,3 +9,8 @@ export const {
 } = NextAuth({
   ...authConfig,
 })
+
+export const getAuthUser = async () => {
+  const session = await auth()
+  return session?.user
+}

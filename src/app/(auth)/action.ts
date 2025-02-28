@@ -1,6 +1,6 @@
 'use server'
 
-import {signIn} from '@/lib/auth'
+import {signIn, signOut} from '@/lib/auth'
 import {AuthError} from 'next-auth'
 import {isRedirectError} from 'next/dist/client/components/redirect-error'
 import {redirect} from 'next/navigation'
@@ -131,4 +131,8 @@ export async function register(formData: FormData) {
       message: "Une erreur est survenue lors de l'inscription",
     }
   }
+}
+
+export async function logout() {
+  await signOut()
 }

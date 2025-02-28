@@ -14,11 +14,15 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar'
 import DashboardPage from './dashboard'
-import {getUserByEmail} from '@/db'
+
+import {getAuthUser} from '@/lib/auth'
+import {redirect} from 'next/navigation'
 
 export default async function Page() {
-  const user = await getUserByEmail('admin@gmail.com')
-  console.log(user)
+  const user = await getAuthUser()
+  if (!user) {
+    redirect('/login')
+  }
   return (
     <SidebarProvider>
       <AppSidebar />
