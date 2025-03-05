@@ -1,152 +1,78 @@
-# Comprendre l’hydratation
+# React Server Component
 
-### 💡 Comprendre l’hydratation et gérer les Errors/Warning
+### 💡 Qu’est-ce qu’un RSC
 
 ## 📝 Tes notes
 
-Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
+Détaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
 
 ## Comprendre
 
-Dans les modules précèdent nous avons vu
+Lorsqu’un développeur écrit du code, il a pour but d’être exécuté quelque part. Dans le monde du web, le code est généralement exécuté soit , côté client (navigateur), soit côté serveur.
 
-- Le rendu coté server (SSR) avec les React Server Components.
-- Le rendu coté client (CSR) avec les React Client Components.
+`React` est historiquement une librairie Javascript qui est conçue pour interagir avec le DOM (dans le navigateur) mais pour des raisons de performances, d’optimisation, de SEO, des techniques de génération côté backend ont apparu, jusqu'à la proposition d’un RFC en 2020
 
-Nous allons aller plus en profondeur sur la manière dont Next gère tout cela. Rappel sur le SSR
+📑 Une RFC : [React Server Component](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md)
 
-- Tout d'abord, toutes les données pour une page donnée sont récupérées sur le serveur.
-- Ensuite, le serveur rend le HTML pour la page.
-- Le HTML, le CSS et le JavaScript de la page sont envoyés au client.
-- Une interface utilisateur non interactive est affichée en utilisant le HTML et le CSS générés.
-- Enfin, React **hydrate** l'interface utilisateur pour la rendre interactive.
+- Server Components **run only on the server and have zero impact on bundle-size**.
+- Server Components **can access server-side data sources.**
 
-![img](/course/server-rendering-without-streaming-chart.avif)
-
-📑 Le liens vers la doc [https://rc.nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming](https://rc.nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming)
-
-On pourrait croire que le processus `SSR` ne concerne que les composants server (RSC). Par exemple dans cet arbre de composant, on pourrait penser que le rendu SSR concerne les RSC et le rendu des RCC se fait uniquement du coté client (`CSR`).
-
-![img](/course/rcc-rsc-tree.png)
-
-En réalité le SSR concerne tout l’arbre de composants. RSC et RCC compris. Les RCC sont donc rendus 2 fois.
-
-Par exemple, ce RCC est rendu **une fois sur le server** sans code client (interaction client etc …) Par exemple ce composant est rendu
+Selon `Vercel` : _React Server Components allow you to write UI that can be rendered and optionally cached on the server. In Server Components, component logic such as data fetching and database mutations is executed exclusively on the server_
 
 ```tsx
-export default function ClientComponent() {
-  const handleClick = () => {
-    alert('Hi')
-  }
-  return <button onClick={handleClick}>Click here</button>
+export default function ReactServerComponent() {
+  return <div>Ceci est un React Server Component</div>
 }
 ```
 
-Devient SSR
+<aside>
+💡 RSC : Juste un simple composant `React`.
 
-```tsx
-<button>Click here</button>
-```
+</aside>
 
-**Et un rendu ensuite sur le client avec hydration (ajout des events et code)**
+Avec Next, tout composant est par défaut un RSC.
 
-```tsx
-//handleClick est contenu dans le bundle/chunk.js
-<button onClick={handleClick}>Click here</button>
-```
-
-On a déjà vu plusieurs fois les bénéfice de ce type de découpage. Mais il faut bien prendre en compte que 2 rendus distinct sont fait. Et pour pouvoir hydrater correctement les contenus doivent être cohérent et identiques. Si le contenu rendu sur le server, diffère du contenu rendu sur le client, des warnings et erreurs sont lévés. Prenons l’exemple suivant :
-
-```tsx
-export default function ClientComponent() {
-  const date = new Date().toString()
-  return <div>{date}</div>
-}
-// SSR date : Tue Jul 02 2024 14:18:53 GMT+0800
-// Le rendu client arrive après
-// CSR date : Tue Jul 02 2024 14:18:54 GMT+0800
-```
-
-Next va alors lever une errors
-
-```tsx
-Unhandled Runtime Error
-Error: Text content does not match server-rendered HTML.
-See more info here: https://nextjs.org/docs/messages/react-hydration-error
-
-Text content did not match. Server: "Tue Jul 02 2024 14:27:43 GMT+0800 (Singapore Standard Time)" Client: "Tue Jul 02 2024 14:27:44 GMT+0800 (heure de Singapour)"
-
-En production :
-Error: Minified React error #425
-```
+📑 Le lien vers un article `Vercel` : [https://vercel.com/blog/understanding-react-server-components](https://vercel.com/blog/understanding-react-server-components)
 
 ## Exercice
 
-**🐶** Dans cet exercice tu vas devoir corriger les erreurs et warnings liés à l’hydratation.
+Maintenant que nous savons ce qu’est un RSC, nous allons faire des `console.log` pour constater dans quel environnement s’exécute notre code.
 
-- Errors :
-  - Imbrication div dans `<p>`
-  - Pour la `date`, split supprime le temps (HH MM SS)
-- Warning
-  - Utilise `suppressHydrationWarning` dans un élément html
-    - Doc : https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
+Fichiers
+
+- `app/rsc-rcc/page`
+
+## Bonus
+
+### 1. 🚀 Convertir le composant en RCC (React Client Component)
+
+Par défaut les composants Next sont des RSC, mais dans certains cas nous avons besoins de composants RCC. Ce sont par exemple les composants qui ont besoin d’interaction utilisateur.
+
+🐶 Ajoute `onClick={() => alert("Hello")}` sur la `<div>` principale du composant.
+
+- Constate l’erreur et corrige la, à l’aide de la directive `'use client'`
 
 <aside>
-💡 Rafraichie la page (F5) et navigue pour voir la différence de comportement
+💡 Nous irons plus en profondeur sur les RSC et RCC dans les modules suivants
+
+</aside>
+
+<aside>
+💡 À noter que les RCC sont rendus côté serveur aussi
 
 </aside>
 
 Fichiers
 
-- `exercises/hydration/client-component.tsx`
+- `/app/rsc-rcc/page`
 
-## Bonus
-
-### 1. 🚀 render après hydration
-
-Dans l’exercice précédent nous avons corrigé les erreurs d’hydrations mais les comportements ne sont pas ceux que nous souhaitons.
-
-- La Date a du être tronquée (or nous voulons afficher une vrai `date and time`)
-- Le rendu est bleu (serveur) or il devrait être rouge (client)
-
-Il manque une dernière étape (si le rendu client diffère du serveur), il manque un rendering. Il faut garder ce schéma en tête
-
-```tsx
-SSR -> Client Loading -> Hydration -> CSR (useEffect)
-// utilise le composant <Phases> pour logger les differentes phases
-```
-
-Pour effectuer un rendu supplémentaire ET qui ne pose pas de problème de d’hydratation il est possible d’utiliser
-
-```tsx
-const [hydrated, setHydrated] = useState(false)
-...
-useEffect(() => {
-  setHydrated(true)
-}, [])
-
- return <div>{hydrated? 'This is never prerendered' : 'Prerendered'}</div>
-```
-
-### Explication
-
-- Lors du SSR `hydrated` est `false`
-- Lors de l’hydratation `hydrated` est toujours à `false` (pas d’erreur)
-- Après hydratation nous utilisons `useEffect` pour effectuer `en re-render`
-
-🐶 Utilise cet technique pour afficher correctement la Date et le Style (blue/Red) en te basant sur `hydrated`.
-
-- Remet : **🤖**`const date = new Date().toString()`
-
-ps : tu peux supprimer `suppressHydrationWarning` car il ne devrait pas y avoir de warning sur le style
-
-Fichiers
-
-- `exercises/hydration/client-component.tsx`
+📑 Lien explication Dan Abramov [https://github.com/reactwg/server-components/discussions/4](https://github.com/reactwg/server-components/discussions/4)
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/docs/messages/react-hydration-error](https://nextjs.org/docs/messages/react-hydration-error)
+📑 Le lien vers la doc [https://nextjs.org/learn/react-foundations/server-and-client-components](https://nextjs.org/learn/react-foundations/server-and-client-components)
+
+- [https://github.com/reactwg/server-components/discussions/4](https://github.com/reactwg/server-components/discussions/4)
 
 ## Ils vont t’aider
 
