@@ -1,0 +1,29 @@
+---
+description: persistence
+globs: packages/persistence/**
+alwaysApply: false
+---
+---
+description: persistence
+globs: 
+---
+You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI, and Tailwind.
+
+Key Principles
+- The **persistence layer** handles all database interactions using **Drizzle ORM**
+- Use **Repository pattern** with Data Access Objects (DAO)
+- Keep database schema and migrations in `/db/models`
+
+File Organization
+- `/db/models/` → Drizzle schema definitions
+- `/db/repositories/` → DAO implementations
+
+
+Best Practices
+- Use TypeScript inference for type safety
+- Implement proper pagination for list queries
+- Handle database errors appropriately
+- Keep repositories focused on data access
+- Use role hierarchies for access control
+- Never expose database models directly
+- Test repositories with TestContainers

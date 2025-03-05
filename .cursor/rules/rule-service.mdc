@@ -1,0 +1,40 @@
+---
+description: services layer rules
+globs: packages/services/**
+alwaysApply: false
+---
+---
+description: services layer rules
+globs: 
+---
+You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI, and Tailwind.
+
+Key Principles
+- The **service layer** handles business logic, authorization, and validation
+- Services communicate with persistence layer through DAOs
+
+File Organization
+- `/services/` main services files
+  - `authorization/` → Permission and access control
+  - `errors/` → Custom error types
+  - `__tests__/` → Service tests
+
+Service Implementation
+- Validate inputs with Zod
+- Check authorization before operations
+- Handle errors appropriately
+- Call DAOs for data operations
+
+Example Service:
+[user-service.ts](mdc:packages/services/src/user-service.ts) 
+```ts
+export const createUser = async (userParams: CreateUser) => {
+  const parsed = createUserServiceSchema.safeParse(userParams)
+  if (!parsed.success) {
+    throw new ParsedError(parsed.error.message)
+  }
+  const userParamsSanitized = parsed.data
+  const user = await createUserDao(userParamsSanitized)
+  return user
+}
+```modular

@@ -1,0 +1,182 @@
+---
+description: presentation Layer
+globs: apps/**
+alwaysApply: true
+---
+---
+description: presentation Layer
+globs: app/**
+---
+
+# Your rule content
+
+You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI, and Tailwind.
+
+Key Principles
+- Prioritize these rules inside /app/** folders (folder for next layout (presentation))
+- Use **React Server Components (RSC)** by default for better performance
+- Only use `"use client"` when necessary (interactivity, browser APIs) else don't use it
+- Use **Server Actions** for mutations (exemple [action.ts](mdc:apps/codemail/src/app/(app)/account/action.ts) )
+
+Route Organization
+```
+app/
+  ├── (public)/ → Public routes
+  │   ├── page.tsx
+  │   └── layout.tsx
+  ├── (auth)/ → Authentication routes
+  │   ├── signin/
+  │   └── signup/
+  ├── (app)/ → Protected user routes
+  │   ├── account/
+  │   └── dashboard/
+  └── (admin)/ → Admin routes
+      └── users/
+```
+
+Component Organization
+```
+components/
+  ├── features/ → Business domain components
+  │   └── user/
+  │       ├── profile-form.tsx
+  │       └── user-card.tsx
+  ├── ui/ → Reusable UI components
+  │   ├── button/
+  │   └── input/
+  └── providers/ → Context providers
+```
+
+Server Component Example:
+```tsx
+
+import { EditUserProfileForm } from './edit-user-profile'
+import { notFound } from 'next/navigation'
+
+export default async function Page() {
+  const user = await getAuthUser()
+  if (!user) {
+    notFound()
+  }
+  return <EditUserProfileForm user={user} />
+}
+```
+
+Client Component Example:
+```tsx
+'use client'
+
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { updateUser } from './action'
+import { toast } from '@/hooks/use-toast'
+
+export function EditUserProfileForm({ user }: { user: User }) {
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+    },
+  })
+
+  async function onSubmit(data: FormValues) {
+    const formData = new FormData()
+    // ... populate formData
+    const result = await updateUser(user.id, formData)
+    
+    if (result.success) {
+      toast({ title: 'Success', description: result.message })
+    }
+  }
+
+  return (
+    <Form {...form}>
+      {/* form fields */}
+    </Form>
+  )
+}
+```
+
+Server Action Example:
+```ts
+'use server'
+import { updateUserSafeService } from '@mikecodeur/services/facades/user-service-facade'
+import { revalidatePath } from 'next/cache'
+
+export async function updateUser(userId: string, formData: FormData) {
+  try {
+    await updateUserSafeService(userId, {
+      id: userId,
+      name: formData.get('name') as string,
+      // ...other fields
+    })
+    revalidatePath('/user')
+    return { success: true }
+  } catch {
+    return { success: false }
+  }
+}
+```
+
+Layout Organization
+```tsx
+// app/(app)/layout.tsx
+import Header from '@/components/features/dashboard-layout/header'
+import Footer from '@/components/features/dashboard-layout/footer'
+import { getUserDal } from '@/app/dal/user-dal'
+
+async function AppLayout({ children }: Props) {
+  const user = await getAuthUser()
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header user={user} />
+      <main className="container mx-auto">{children}</main>
+      <Footer />
+    </div>
+  )
+}
+export default withAuth(AppLayout)
+```
+
+Best Practices
+- Use RSC by default
+- Keep Client Components small and focused
+- Fetch data in RSC using DAL
+- Use Server Actions for mutations
+- Implement proper error boundaries
+- Use TypeScript for type safety
+- Follow consistent naming conventions
+- Keep UI components pure and reusable
+- Use proper loading and error states
+- Implement responsive design with Tailwind
+- Use Shadcn UI components when possible
+
+Form Handling
+- Use React Hook Form for client forms
+- Implement Zod validation
+- Use Server Actions for submission
+- Show proper loading states
+- Handle errors gracefully
+- Display toast notifications
+
+Error Handling
+- Implement error boundaries
+- Use proper HTTP status codes
+- Show user-friendly error messages
+- Log errors appropriately
+- Handle network errors
+- Provide fallback UI
+
+Loading States
+- Use Suspense boundaries
+- Implement loading skeletons
+- Show proper spinners
+- Handle partial loading
+- Prevent layout shifts
+
+Architecture Constraints
+- Use ESLint rules to enforce clean architecture
+- Follow strict import rules between layers
+- Prevent direct database or repository access
+
