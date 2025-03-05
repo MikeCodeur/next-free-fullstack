@@ -17,6 +17,15 @@
       "password": "password",
       "createdAt": "2025-03-05T03:56:41.538Z",
       "updatedAt": "2025-03-05T03:56:41.538Z"
+    },
+    {
+      "id": "5e5fa104-b76a-4265-af2a-61412edc1f70",
+      "name": "toto",
+      "email": "toto@gmail.com",
+      "password": "azerty",
+      "role": "user",
+      "createdAt": "2025-03-05T07:15:12.673Z",
+      "updatedAt": "2025-03-05T07:15:12.673Z"
     }
   ]
 }

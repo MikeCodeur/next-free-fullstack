@@ -1,6 +1,6 @@
-# Server Action
+# Gérer authentification avec Next-Auth
 
-### 💡 Comprendre les server Actionb
+### 💡 Gérer authentification
 
 ## 📝 Tes notes
 
@@ -8,77 +8,97 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Les **Server Actions** sont une fonctionnalité puissante de Next.js qui permet d'exécuter du code côté serveur directement depuis un composant React, sans passer par une API externe. Contrairement aux API Routes traditionnelles, elles simplifient la gestion des actions serveur comme l'accès à une base de données, l'authentification ou l'envoi d'e-mails, tout en optimisant les performances grâce à l'exécution côté backend.
+### Introduction à NextAuth.js
 
-Dans ce module, nous allons découvrir comment utiliser efficacement les Server Actions pour traiter des requêtes côté serveur, interagir avec une base de données et améliorer l'expérience utilisateur en réduisant le code nécessaire côté client.
+L'authentification est une partie essentielle de toute application web moderne. **NextAuth.js** est une solution **d'authentification complète et flexible** pour **Next.js**, qui permet d'ajouter rapidement des fonctionnalités de connexion à une application, sans avoir à gérer manuellement les sessions et la sécurité des tokens.
 
-Exemple
+Avec **NextAuth.js**, tu peux intégrer différents **fournisseurs d'authentification** comme :
 
-```tsx
-// app/actions.ts
-'use server'
+✅ **Google, GitHub, Twitter, Discord** (OAuth)
 
-import {db} from '@/lib/db' // Supposons que db soit une instance de ta base de données
+✅ **Email/password avec Magic Link**
 
-export async function addUser(name: string, email: string) {
-  await db.user.create({
-    data: {name, email},
-  })
-}
-```
+✅ **Authentification par identifiants classiques (credentials)**
 
-```tsx
-'use client'
+✅ **JWT et sessions sécurisées**
 
-import {useState} from 'react'
-import {addUser} from '@/app/actions'
+Dans ce module, nous allons voir **comment configurer NextAuth.js**, gérer les sessions, et protéger certaines pages de ton application **Next.js**
 
-export default function UserForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    await addUser(name, email)
-    alert('Utilisateur ajouté !')
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Nom"
-      />
-      <input
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <button type="submit">Ajouter</button>
-    </form>
-  )
-}
-```
-
-📑 Le liens vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+📑 Le liens vers la doc [https://authjs.dev/](https://authjs.dev/)
 
 ## Exercice
 
-Implémente le formulaire et le server action qui appelle la base de données.
+Pour gagner du temps nous avons suivi le `get-started` et les fichiers `auth.ts` et `auth-config.ts` sont la
 
-- Pense a vérifier les données en entrées
-- Pense a fournir un code retour
+[https://authjs.dev/getting-started/installation?framework=next-js](https://authjs.dev/getting-started/installation?framework=next-js)
+
+- De même que les formulaire sont maintenant connectés au `server action`
+
+Dans cet exercice tu vas devoir appeler les fonctions `sign-in` `sign-up` dans le server action
+
+- Mais dans un premier temps tu vas devoir configurer `next-auth` avec le `provider Credentials`
+
+```tsx
+providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+
+      async authorize(credentials) {
+
+        if (!credentials?.email || !credentials?.password) {
+          return null
+        }
+
+        const user = await getUserByEmail(credentials.email as string)
+        console.log('authorize getUserByEmail', user)
+
+        if (!user) {
+          return null
+        }
+
+        // Dans un environnement de production, vous devriez comparer avec un mot de passe hashé
+        if (credentials.password !== user.password) {
+          return null
+        }
+        console.log('authorize password ok', user)
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        }
+      },
+    }),
+  ],
+```
 
 Fichiers
 
-- `/app/server-action/page`
+- `lib/auth-config.ts`
+- `(auth)/actions.ts`
 
-##
+## Bonus
+
+### 1. 🚀 Générer le Root Node
+
+Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
+
+Fichiers
+
+- `exercise/about/page`
+
+### 2. 🚀 Bonus 2
+
+2Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
+
+Fichiers
+
+- `exercise/about/page`
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
 
 ## Ils vont t’aider
 
