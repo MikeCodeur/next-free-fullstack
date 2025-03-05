@@ -1,6 +1,6 @@
-# Gérer authentification avec Next-Auth
+# Dashboard
 
-### 💡 Gérer authentification
+### 💡 Faire un Dashboard protégé
 
 ## 📝 Tes notes
 
@@ -8,102 +8,51 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-### Introduction à NextAuth.js
+Maintenant que nous avons l’authentification pour pouvons protéger des routes de la manière suivante.
 
-L'authentification est une partie essentielle de toute application web moderne. **NextAuth.js** est une solution **d'authentification complète et flexible** pour **Next.js**, qui permet d'ajouter rapidement des fonctionnalités de connexion à une application, sans avoir à gérer manuellement les sessions et la sécurité des tokens.
+```tsx
+const user = await auth()
+if (!user) {
+  redirect('/login')
+}
+```
 
-Avec **NextAuth.js**, tu peux intégrer différents **fournisseurs d'authentification** comme :
-
-✅ **Google, GitHub, Twitter, Discord** (OAuth)
-
-✅ **Email/password avec Magic Link**
-
-✅ **Authentification par identifiants classiques (credentials)**
-
-✅ **JWT et sessions sécurisées**
-
-Dans ce module, nous allons voir **comment configurer NextAuth.js**, gérer les sessions, et protéger certaines pages de ton application **Next.js**
-
-📑 Le liens vers la doc [https://authjs.dev/](https://authjs.dev/)
+Nous allons pouvoir maintenant développer ici la partie fonctionnel de notre SaaS.
 
 ## Exercice
 
-Pour gagner du temps nous avons suivi le `get-started` et les fichiers `auth.ts` et `auth-config.ts` sont la
+Utilise la sidebar de shadcn et intègre dans un `Layout`
 
-[https://authjs.dev/getting-started/installation?framework=next-js](https://authjs.dev/getting-started/installation?framework=next-js)
-
-- De même que les formulaire sont maintenant connectés au `server action`
-
-Dans cet exercice tu vas devoir appeler les fonctions `sign-in` `sign-up` dans le server action
-
-- Mais dans un premier temps tu vas devoir configurer `next-auth` avec le `provider Credentials`
+[https://ui.shadcn.com/blocks](https://ui.shadcn.com/blocks)
 
 ```tsx
-providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-
-      async authorize(credentials) {
-
-        if (!credentials?.email || !credentials?.password) {
-          return null
-        }
-
-        const user = await getUserByEmail(credentials.email as string)
-        console.log('authorize getUserByEmail', user)
-
-        if (!user) {
-          return null
-        }
-
-        // Dans un environnement de production, vous devriez comparer avec un mot de passe hashé
-        if (credentials.password !== user.password) {
-          return null
-        }
-        console.log('authorize password ok', user)
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        }
-      },
-    }),
-  ],
+pnpm dlx shadcn@latest add sidebar-03
 ```
 
 Fichiers
 
-- `lib/auth-config.ts`
-- `(auth)/actions.ts`
+- `app/dashboard/layout`
 
 ## Bonus
 
-### 1. 🚀 Générer le Root Node
+### 1. 🚀 Utilise [V0.dev](http://V0.dev) pour générer un Dashboard
 
-Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
+https://v0.dev/
 
-Fichiers
-
-- `exercise/about/page`
-
-### 2. 🚀 Bonus 2
-
-2Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
+Récupère ce `dashboard` dans ton projet avec `ShadCn cli`
 
 Fichiers
 
-- `exercise/about/page`
+- `app/dashboard/page`
+
+### 2. 🚀 Créer une nouvelle route
+
+Créé une `feature` de ton choix
+
+Fichiers
+
+- `app/dashboard/route/page`
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
-
-## Ils vont t’aider
-
-- **🐶 Mowgli le Chien** : _Mowgli te guidera dans chaque exercice._
-- **🤖 Ash le Robot** : _Ash le Robot te donnera du code utile._
-- **🚀 Julia La roquette** : _Julia te donnera des défis supplémentaires._
-- **⛏️ Hulk le Marteau** : _Quand du code à supprimer est présent_
-- **👨‍✈️ Hugo le chef de projet** : _Va t'aider sur les spécifications du projet_
+📑 Le lien vers la doc [https://v0.dev/](https://v0.dev/)
