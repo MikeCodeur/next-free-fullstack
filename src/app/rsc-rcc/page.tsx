@@ -1,6 +1,11 @@
-//export {default} from "./page.final"
+'use client'
+const Page = () => {
+  console.log('BONUS Je suis un développeur FullStack Next')
+  return (
+    <div onClick={() => alert('Hello')}>
+      <p>BONUS Je suis un développeur FullStack Next</p>
+    </div>
+  )
+}
 
-export {default} from './page.exercise'
-
-// 1. 🚀 Convertir le composant en RCC (React Client Component)
-//export {default} from './page.bonus-1'
+export default Page

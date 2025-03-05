@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": "e459964b-13af-428b-a7bb-fe8876895c85",
+      "name": "Utilisateur Standard",
+      "email": "user@gmail.com",
+      "role": "user",
+      "password": "password",
+      "createdAt": "2025-03-05T03:56:41.538Z",
+      "updatedAt": "2025-03-05T03:56:41.538Z"
+    },
+    {
+      "id": "14eb1b44-a6a3-429e-bcb2-68f6c4c8c85c",
+      "name": "Administrateur",
+      "email": "admin@gmail.com",
+      "role": "admin",
+      "password": "password",
+      "createdAt": "2025-03-05T03:56:41.538Z",
+      "updatedAt": "2025-03-05T03:56:41.538Z"
+    }
+  ]
+}

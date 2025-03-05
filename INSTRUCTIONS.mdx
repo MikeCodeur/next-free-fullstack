@@ -1,78 +1,84 @@
-# React Server Component
+# Server Action
 
-### 💡 Qu’est-ce qu’un RSC
+### 💡 Comprendre les server Actionb
 
 ## 📝 Tes notes
 
-Détaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
+Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
 
 ## Comprendre
 
-Lorsqu’un développeur écrit du code, il a pour but d’être exécuté quelque part. Dans le monde du web, le code est généralement exécuté soit , côté client (navigateur), soit côté serveur.
+Les **Server Actions** sont une fonctionnalité puissante de Next.js qui permet d'exécuter du code côté serveur directement depuis un composant React, sans passer par une API externe. Contrairement aux API Routes traditionnelles, elles simplifient la gestion des actions serveur comme l'accès à une base de données, l'authentification ou l'envoi d'e-mails, tout en optimisant les performances grâce à l'exécution côté backend.
 
-`React` est historiquement une librairie Javascript qui est conçue pour interagir avec le DOM (dans le navigateur) mais pour des raisons de performances, d’optimisation, de SEO, des techniques de génération côté backend ont apparu, jusqu'à la proposition d’un RFC en 2020
+Dans ce module, nous allons découvrir comment utiliser efficacement les Server Actions pour traiter des requêtes côté serveur, interagir avec une base de données et améliorer l'expérience utilisateur en réduisant le code nécessaire côté client.
 
-📑 Une RFC : [React Server Component](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md)
-
-- Server Components **run only on the server and have zero impact on bundle-size**.
-- Server Components **can access server-side data sources.**
-
-Selon `Vercel` : _React Server Components allow you to write UI that can be rendered and optionally cached on the server. In Server Components, component logic such as data fetching and database mutations is executed exclusively on the server_
+Exemple
 
 ```tsx
-export default function ReactServerComponent() {
-  return <div>Ceci est un React Server Component</div>
+// app/actions.ts
+'use server'
+
+import {db} from '@/lib/db' // Supposons que db soit une instance de ta base de données
+
+export async function addUser(name: string, email: string) {
+  await db.user.create({
+    data: {name, email},
+  })
 }
 ```
 
-<aside>
-💡 RSC : Juste un simple composant `React`.
+```tsx
+'use client'
 
-</aside>
+import {useState} from 'react'
+import {addUser} from '@/app/actions'
 
-Avec Next, tout composant est par défaut un RSC.
+export default function UserForm() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
 
-📑 Le lien vers un article `Vercel` : [https://vercel.com/blog/understanding-react-server-components](https://vercel.com/blog/understanding-react-server-components)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await addUser(name, email)
+    alert('Utilisateur ajouté !')
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Nom"
+      />
+      <input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <button type="submit">Ajouter</button>
+    </form>
+  )
+}
+```
+
+📑 Le liens vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
 
 ## Exercice
 
-Maintenant que nous savons ce qu’est un RSC, nous allons faire des `console.log` pour constater dans quel environnement s’exécute notre code.
+Implémente le formulaire et le server action qui appelle la base de données.
+
+- Pense a vérifier les données en entrées
+- Pense a fournir un code retour
 
 Fichiers
 
-- `app/rsc-rcc/page`
+- `/app/server-action/page`
 
-## Bonus
-
-### 1. 🚀 Convertir le composant en RCC (React Client Component)
-
-Par défaut les composants Next sont des RSC, mais dans certains cas nous avons besoins de composants RCC. Ce sont par exemple les composants qui ont besoin d’interaction utilisateur.
-
-🐶 Ajoute `onClick={() => alert("Hello")}` sur la `<div>` principale du composant.
-
-- Constate l’erreur et corrige la, à l’aide de la directive `'use client'`
-
-<aside>
-💡 Nous irons plus en profondeur sur les RSC et RCC dans les modules suivants
-
-</aside>
-
-<aside>
-💡 À noter que les RCC sont rendus côté serveur aussi
-
-</aside>
-
-Fichiers
-
-- `/app/rsc-rcc/page`
-
-📑 Lien explication Dan Abramov [https://github.com/reactwg/server-components/discussions/4](https://github.com/reactwg/server-components/discussions/4)
+##
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/learn/react-foundations/server-and-client-components](https://nextjs.org/learn/react-foundations/server-and-client-components)
-
-- [https://github.com/reactwg/server-components/discussions/4](https://github.com/reactwg/server-components/discussions/4)
+📑 Le lien vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
 
 ## Ils vont t’aider
 
@@ -81,7 +87,3 @@ Fichiers
 - **🚀 Julia La roquette** : _Julia te donnera des défis supplémentaires._
 - **⛏️ Hulk le Marteau** : _Quand du code à supprimer est présent_
 - **👨‍✈️ Hugo le chef de projet** : _Va t'aider sur les spécifications du projet_
-
-## 🐜 Feedback
-
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=Rendering%20Avancée&entry.533578441=08%20hydration).
