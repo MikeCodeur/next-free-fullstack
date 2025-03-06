@@ -1,18 +1,18 @@
 # Gérer authentification avec Next-Auth
 
-### 💡 Gérer authentification
+### 💡 Gérer l’authentification
 
 ## 📝 Tes notes
 
-Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
+Détaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
 
 ## Comprendre
 
-### Introduction à NextAuth.js
+### Introduction à `NextAuth.js`
 
-L'authentification est une partie essentielle de toute application web moderne. **NextAuth.js** est une solution **d'authentification complète et flexible** pour **Next.js**, qui permet d'ajouter rapidement des fonctionnalités de connexion à une application, sans avoir à gérer manuellement les sessions et la sécurité des tokens.
+L'authentification est une partie essentielle de toute application web moderne. **`NextAuth.js`** est une solution **d'authentification complète et flexible** pour **`Next.js`**, qui permet d'ajouter rapidement des fonctionnalités de connexion à une application, sans avoir à gérer manuellement les sessions et la sécurité des `tokens`.
 
-Avec **NextAuth.js**, tu peux intégrer différents **fournisseurs d'authentification** comme :
+Avec **`NextAuth.js`**, tu peux intégrer différents **fournisseurs d'authentification** comme :
 
 ✅ **Google, GitHub, Twitter, Discord** (OAuth)
 
@@ -22,29 +22,29 @@ Avec **NextAuth.js**, tu peux intégrer différents **fournisseurs d'authentific
 
 ✅ **JWT et sessions sécurisées**
 
-Dans ce module, nous allons voir **comment configurer NextAuth.js**, gérer les sessions, et protéger certaines pages de ton application **Next.js**
+Dans ce module, nous allons voir **comment configurer `NextAuth.js`**, gérer les sessions, et protéger certaines pages de ton application **`Next.js`** 
 
-📑 Le liens vers la doc [https://authjs.dev/](https://authjs.dev/)
+📑 Le lien vers la doc [https://authjs.dev/](https://authjs.dev/)
 
 ## Exercice
 
-Pour gagner du temps nous avons suivi le `get-started` et les fichiers `auth.ts` et `auth-config.ts` sont la
+Pour gagner du temps, nous avons suivi le `get-started` et les fichiers `auth.ts` et `auth-config.ts` sont la 
 
 [https://authjs.dev/getting-started/installation?framework=next-js](https://authjs.dev/getting-started/installation?framework=next-js)
 
-- De même que les formulaire sont maintenant connectés au `server action`
+- De même que les formulaires sont maintenant connectés au `server action`
 
-Dans cet exercice tu vas devoir appeler les fonctions `sign-in` `sign-up` dans le server action
+Dans cet exercice, tu vas devoir appeler les fonctions `sign-in` `sign-up` dans le server action
 
-- Mais dans un premier temps tu vas devoir configurer `next-auth` avec le `provider Credentials`
+- Mais dans un premier temps, tu vas devoir configurer `next-auth` avec le `provider Credentials`
 
 ```tsx
 providers: [
     CredentialsProvider({
       name: 'Credentials',
-
+     
       async authorize(credentials) {
-
+      
         if (!credentials?.email || !credentials?.password) {
           return null
         }
@@ -78,32 +78,14 @@ Fichiers
 - `lib/auth-config.ts`
 - `(auth)/actions.ts`
 
-## Bonus
-
-### 1. 🚀 Générer le Root Node
-
-Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
-
-Fichiers
-
-- `exercise/about/page`
-
-### 2. 🚀 Bonus 2
-
-2Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
-
-Fichiers
-
-- `exercise/about/page`
-
 ## Aller plus loin
 
 📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
 
 ## Ils vont t’aider
 
-- **🐶 Mowgli le Chien** : _Mowgli te guidera dans chaque exercice._
-- **🤖 Ash le Robot** : _Ash le Robot te donnera du code utile._
-- **🚀 Julia La roquette** : _Julia te donnera des défis supplémentaires._
-- **⛏️ Hulk le Marteau** : _Quand du code à supprimer est présent_
-- **👨‍✈️ Hugo le chef de projet** : _Va t'aider sur les spécifications du projet_
+- **🐶  Mowgli le Chien** : *Mowgli te guidera dans chaque exercice.*
+- **🤖  Ash le Robot** : *Ash le Robot te donnera du code utile.*
+- **🚀 Julia La roquette** : *Julia te donnera des défis supplémentaires.*
+- **⛏️ Hulk le Marteau** : *Quand du code à supprimer est présent*
+- **👨‍✈️ Hugo le chef de projet** : *Va t'aider sur les spécifications du projet*
