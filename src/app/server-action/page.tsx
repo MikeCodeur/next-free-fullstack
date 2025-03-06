@@ -24,7 +24,7 @@ export default function Page() {
 
   return (
     <div className="p-8">
-      <h1 className="mb-4 text-2xl font-bold">Crééer un utilisateur</h1>
+      <h1 className="mb-4 text-2xl font-bold">Créer un utilisateur</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
