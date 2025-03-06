@@ -1,161 +1,96 @@
-# Comprendre l’hydratation
+# Create Next App
 
-### 💡 Comprendre l’hydratation et gérer les Errors/Warning
+### 💡 Créer une application `Next.js`
 
 ## 📝 Tes notes
 
-Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
+Détaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
 
 ## Comprendre
 
-Dans les modules précèdent nous avons vu
+Créer une application `Next.js` peut sembler complexe au premier abord, mais grâce à `c**reate-next-app**`, le processus est **grandement** simplifié. Cet outil permet **de lancer** un projet en quelques secondes avec une structure optimisée et prête à l’emploi.
 
-- Le rendu coté server (SSR) avec les React Server Components.
-- Le rendu coté client (CSR) avec les React Client Components.
+Dans ce module, nous allons voir comment l’installer et l’utiliser efficacement. Que tu sois débutant ou expérimenté, cette méthode te fera gagner un temps précieux.
 
-Nous allons aller plus en profondeur sur la manière dont Next gère tout cela. Rappel sur le SSR
+**Prêt à démarrer ton premier projet Next.js ?**
 
-- Tout d'abord, toutes les données pour une page donnée sont récupérées sur le serveur.
-- Ensuite, le serveur rend le HTML pour la page.
-- Le HTML, le CSS et le JavaScript de la page sont envoyés au client.
-- Une interface utilisateur non interactive est affichée en utilisant le HTML et le CSS générés.
-- Enfin, React **hydrate** l'interface utilisateur pour la rendre interactive.
+### Créer des routes
 
-![img](/course/server-rendering-without-streaming-chart.avif)
+Avec `React` nous devons utiliser une librairie externe comme `React-Router` et ensuite gérer la configuration des routes et des composants associés à ces routes.
 
-📑 Le liens vers la doc [https://rc.nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming](https://rc.nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming)
-
-On pourrait croire que le processus `SSR` ne concerne que les composants server (RSC). Par exemple dans cet arbre de composant, on pourrait penser que le rendu SSR concerne les RSC et le rendu des RCC se fait uniquement du coté client (`CSR`).
-
-![img](/course/rcc-rsc-tree.png)
-
-En réalité le SSR concerne tout l’arbre de composants. RSC et RCC compris. Les RCC sont donc rendus 2 fois.
-
-Par exemple, ce RCC est rendu **une fois sur le server** sans code client (interaction client etc …) Par exemple ce composant est rendu
+Avec `Next` la création d’une route se fait simplement par ajout d’un répertoire dans `app` et d’un fichier nommé `page.jsx` ou `page.tsx` en `TypeScript` :
 
 ```tsx
-export default function ClientComponent() {
-  const handleClick = () => {
-    alert('Hi')
-  }
-  return <button onClick={handleClick}>Click here</button>
+export default function Page() {
+  return <h1>Hello, Cela est ma première route</h1>
 }
 ```
 
-Devient SSR
+- En terme de structure cela ressemble à :
 
-```tsx
-<button>Click here</button>
-```
+![project-organization-colocation.png](project-organization-colocation.png)
 
-**Et un rendu ensuite sur le client avec hydration (ajout des events et code)**
-
-```tsx
-//handleClick est contenu dans le bundle/chunk.js
-<button onClick={handleClick}>Click here</button>
-```
-
-On a déjà vu plusieurs fois les bénéfice de ce type de découpage. Mais il faut bien prendre en compte que 2 rendus distinct sont fait. Et pour pouvoir hydrater correctement les contenus doivent être cohérent et identiques. Si le contenu rendu sur le server, diffère du contenu rendu sur le client, des warnings et erreurs sont lévés. Prenons l’exemple suivant :
-
-```tsx
-export default function ClientComponent() {
-  const date = new Date().toString()
-  return <div>{date}</div>
-}
-// SSR date : Tue Jul 02 2024 14:18:53 GMT+0800
-// Le rendu client arrive après
-// CSR date : Tue Jul 02 2024 14:18:54 GMT+0800
-```
-
-Next va alors lever une errors
-
-```tsx
-Unhandled Runtime Error
-Error: Text content does not match server-rendered HTML.
-See more info here: https://nextjs.org/docs/messages/react-hydration-error
-
-Text content did not match. Server: "Tue Jul 02 2024 14:27:43 GMT+0800 (Singapore Standard Time)" Client: "Tue Jul 02 2024 14:27:44 GMT+0800 (heure de Singapour)"
-
-En production :
-Error: Minified React error #425
-```
+📑 Le lien vers la doc : [https://nextjs.org/docs/app/building-your-application/routing/defining-routes](https://nextjs.org/docs/app/building-your-application/routing/defining-routes)
 
 ## Exercice
 
-**🐶** Dans cet exercice tu vas devoir corriger les erreurs et warnings liés à l’hydratation.
+Nous allons créer une première route `/about`  qui affiche `“Je suis un développeur FullStack Next”`
 
-- Errors :
-  - Imbrication div dans `<p>`
-  - Pour la `date`, split supprime le temps (HH MM SS)
-- Warning
-  - Utilise `suppressHydrationWarning` dans un élément html
-    - Doc : https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
-
-<aside>
-💡 Rafraichie la page (F5) et navigue pour voir la différence de comportement
-
-</aside>
+```tsx
+export default function Page() {
+  return <h1>Je suis un développeur FullStack Next</h1>
+}
+```
 
 Fichiers
 
-- `exercises/hydration/client-component.tsx`
+- `/about`
+
+## Exercice
+
+Il est important d’avoir une compréhension de base de la façon de générer et d’interagir avec des nœuds `DOM` en utilisant `JavaScript`, car cela vous aidera à mieux comprendre le fonctionnement de `React` sous le capot.
+
+Donc, dans cet exercice, nous n’allons en fait pas utiliser `React` du tout. Au lieu de cela, nous allons utiliser `JavaScript` pour créer un **nœud `DOM`** `<div>` avec le texte `“Hello World”` et **l’insérer** dans le document.
+
+Fichiers
+
+- `exercise/about/page`
 
 ## Bonus
 
-### 1. 🚀 render après hydration
+### 1. 🚀 Build de production
 
-Dans l’exercice précédent nous avons corrigé les erreurs d’hydrations mais les comportements ne sont pas ceux que nous souhaitons.
-
-- La Date a du être tronquée (or nous voulons afficher une vrai `date and time`)
-- Le rendu est bleu (serveur) or il devrait être rouge (client)
-
-Il manque une dernière étape (si le rendu client diffère du serveur), il manque un rendering. Il faut garder ce schéma en tête
+Lance un `build` de production avec 
 
 ```tsx
-SSR -> Client Loading -> Hydration -> CSR (useEffect)
-// utilise le composant <Phases> pour logger les differentes phases
+pnpm build
 ```
-
-Pour effectuer un rendu supplémentaire ET qui ne pose pas de problème de d’hydratation il est possible d’utiliser
-
-```tsx
-const [hydrated, setHydrated] = useState(false)
-...
-useEffect(() => {
-  setHydrated(true)
-}, [])
-
- return <div>{hydrated? 'This is never prerendered' : 'Prerendered'}</div>
-```
-
-### Explication
-
-- Lors du SSR `hydrated` est `false`
-- Lors de l’hydratation `hydrated` est toujours à `false` (pas d’erreur)
-- Après hydratation nous utilisons `useEffect` pour effectuer `en re-render`
-
-🐶 Utilise cet technique pour afficher correctement la Date et le Style (blue/Red) en te basant sur `hydrated`.
-
-- Remet : **🤖**`const date = new Date().toString()`
-
-ps : tu peux supprimer `suppressHydrationWarning` car il ne devrait pas y avoir de warning sur le style
 
 Fichiers
 
-- `exercises/hydration/client-component.tsx`
+- `exercise/about/page`
+
+### 2. 🚀 Lance une commande de lint
+
+```tsx
+pnpm lint
+```
+
+### 3. 🚀 Lance une commande prettier
+
+```tsx
+pnpm format
+pnpm format:fix
+```
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/docs/messages/react-hydration-error](https://nextjs.org/docs/messages/react-hydration-error)
+📑 Le lien vers la doc [https://nextjs.org/docs/app/api-reference/cli/create-next-app](https://nextjs.org/docs/app/api-reference/cli/create-next-app)
 
 ## Ils vont t’aider
 
-- **🐶 Mowgli le Chien** : _Mowgli te guidera dans chaque exercice._
-- **🤖 Ash le Robot** : _Ash le Robot te donnera du code utile._
-- **🚀 Julia La roquette** : _Julia te donnera des défis supplémentaires._
-- **⛏️ Hulk le Marteau** : _Quand du code à supprimer est présent_
-- **👨‍✈️ Hugo le chef de projet** : _Va t'aider sur les spécifications du projet_
-
-## 🐜 Feedback
-
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=Rendering%20Avancée&entry.533578441=08%20hydration).
+- **🐶  Mowgli le Chien** : *Mowgli te guidera dans chaque exercice.*
+- **🤖  Ash le Robot** : *Ash le Robot te donnera du code utile.*
+- **🚀 Julia La roquette** : *Julia te donnera des défis supplémentaires.*
+- **⛏️ Hulk le Marteau** : *Quand du code à supprimer est présent*
+- **👨‍✈️ Hugo le chef de projet** : *Va t'aider sur les spécifications du projet*
