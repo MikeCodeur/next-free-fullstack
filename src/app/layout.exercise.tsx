@@ -1,8 +1,8 @@
 import React from 'react'
-// 👨‍✈️ Spécification : Notre application doit supporter les thèmes clair/sombre
+// 👨‍✈️ Spécification : Notre application doit supporter les thèmes `clair/sombre`
 
 // 🐶 Nous avons déjà les imports de base, mais il nous manque un élément important
-// 🐶 Tu dois importer le ThemeProvider depuis '@/components/theme-provider'
+// 🐶 Tu dois importer le `ThemeProvider` depuis `@/components/theme-provider`
 import type {Metadata} from 'next'
 import {Geist, Geist_Mono} from 'next/font/google'
 import './globals.css'
@@ -28,14 +28,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    // 🐶 Première étape : Ajoute l'attribut suppressHydrationWarning à la balise html
+    // 🐶 Première étape : Ajoute l'attribut `suppressHydrationWarning` à la balise html
     // pour éviter les avertissements lors du changement de thème
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* 🐶 Deuxième étape : Enveloppe le contenu dans un ThemeProvider */}
-        {/* 🤖 Le ThemeProvider doit avoir les propriétés suivantes :
+        {/* 🐶 Deuxième étape : Enveloppe le contenu dans un `ThemeProvider` */}
+        {/* 🤖 Le `ThemeProvider` doit avoir les propriétés suivantes :
             - attribute="class" (pour gérer les thèmes via les classes CSS)
             - defaultTheme="dark" (thème par défaut)
             - enableSystem (pour supporter les préférences système)

@@ -1,5 +1,5 @@
 // 👨‍✈️ Spécification : Nous devons ajouter un bouton pour changer le thème de l'application
-// 🐶 Première étape : Importe le composant ModeToggle depuis '@/components/theme-toggle'
+// 🐶 Première étape : Importe le composant `ModeToggle` depuis `@/components/theme-toggle`
 
 import Image from 'next/image'
 import Link from 'next/link'
