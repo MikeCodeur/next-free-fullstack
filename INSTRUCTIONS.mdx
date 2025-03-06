@@ -1,152 +1,77 @@
-# Comprendre l’hydratation
+# Configuration de Shadcn
 
-### 💡 Comprendre l’hydratation et gérer les Errors/Warning
+### 💡 Comprendre et utiliser `Shadcn`
 
 ## 📝 Tes notes
 
-Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
+Détaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
 
 ## Comprendre
 
-Dans les modules précèdent nous avons vu
+Pour la suite des exercices nous allons utiliser `Shadcn UI`.
 
-- Le rendu coté server (SSR) avec les React Server Components.
-- Le rendu coté client (CSR) avec les React Client Components.
+**`Shadcn UI`** n’est pas une librairie mais est une collection de composants réutilisables. Il est basé sur `Radix-ui`, une librairie qui se focus sur l’accessibilité et non stylisée par défaut. Pour les icônes, il utilise **`Lucide`.** Pour l’ensemble des composants, certains se basent sur des librairies déjà existantes et populaires.
+**`Shadcn UI`** te permet de garder le contrôle sur le code qu’il te fournit. Il est utilisé en combinaison avec `Tailwind` pour le CSS.
 
-Nous allons aller plus en profondeur sur la manière dont Next gère tout cela. Rappel sur le SSR
+- Exemple d’utilisation:
 
-- Tout d'abord, toutes les données pour une page donnée sont récupérées sur le serveur.
-- Ensuite, le serveur rend le HTML pour la page.
-- Le HTML, le CSS et le JavaScript de la page sont envoyés au client.
-- Une interface utilisateur non interactive est affichée en utilisant le HTML et le CSS générés.
-- Enfin, React **hydrate** l'interface utilisateur pour la rendre interactive.
+```jsx
+import {Button} from '@/components/ui/button'
 
-![img](/course/server-rendering-without-streaming-chart.avif)
-
-📑 Le liens vers la doc [https://rc.nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming](https://rc.nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming)
-
-On pourrait croire que le processus `SSR` ne concerne que les composants server (RSC). Par exemple dans cet arbre de composant, on pourrait penser que le rendu SSR concerne les RSC et le rendu des RCC se fait uniquement du coté client (`CSR`).
-
-![img](/course/rcc-rsc-tree.png)
-
-En réalité le SSR concerne tout l’arbre de composants. RSC et RCC compris. Les RCC sont donc rendus 2 fois.
-
-Par exemple, ce RCC est rendu **une fois sur le server** sans code client (interaction client etc …) Par exemple ce composant est rendu
-
-```tsx
-export default function ClientComponent() {
-  const handleClick = () => {
-    alert('Hi')
-  }
-  return <button onClick={handleClick}>Click here</button>
+export function ButtonDemo() {
+  return <Button>Button</Button>
 }
 ```
 
-Devient SSR
+📑 Le lien vers la doc [https://ui.shadcn.com](https://ui.shadcn.com/)
+
+Nous reviendrons plus en détail plus tard sur la configuration et l’utilisation de `shadcn`.
+
+Nous avons ici préconfiguré le projet en suivant la documentation. [https://ui.shadcn.com/docs/installation/next](https://ui.shadcn.com/docs/installation/next)
 
 ```tsx
-<button>Click here</button>
+npx shadcn-ui@latest init
 ```
 
-**Et un rendu ensuite sur le client avec hydration (ajout des events et code)**
+Nous avons ensuite configuré la gestion du thème et `darkmode`.
 
-```tsx
-//handleClick est contenu dans le bundle/chunk.js
-<button onClick={handleClick}>Click here</button>
-```
-
-On a déjà vu plusieurs fois les bénéfice de ce type de découpage. Mais il faut bien prendre en compte que 2 rendus distinct sont fait. Et pour pouvoir hydrater correctement les contenus doivent être cohérent et identiques. Si le contenu rendu sur le server, diffère du contenu rendu sur le client, des warnings et erreurs sont lévés. Prenons l’exemple suivant :
-
-```tsx
-export default function ClientComponent() {
-  const date = new Date().toString()
-  return <div>{date}</div>
-}
-// SSR date : Tue Jul 02 2024 14:18:53 GMT+0800
-// Le rendu client arrive après
-// CSR date : Tue Jul 02 2024 14:18:54 GMT+0800
-```
-
-Next va alors lever une errors
-
-```tsx
-Unhandled Runtime Error
-Error: Text content does not match server-rendered HTML.
-See more info here: https://nextjs.org/docs/messages/react-hydration-error
-
-Text content did not match. Server: "Tue Jul 02 2024 14:27:43 GMT+0800 (Singapore Standard Time)" Client: "Tue Jul 02 2024 14:27:44 GMT+0800 (heure de Singapour)"
-
-En production :
-Error: Minified React error #425
-```
+- [https://ui.shadcn.com/docs/theming](https://ui.shadcn.com/docs/theming)
+- [https://ui.shadcn.com/docs/dark-mode](https://ui.shadcn.com/docs/dark-mode)
 
 ## Exercice
 
-**🐶** Dans cet exercice tu vas devoir corriger les erreurs et warnings liés à l’hydratation.
+Implémente `Shadcn` et le système de sélection de thèmes
 
-- Errors :
-  - Imbrication div dans `<p>`
-  - Pour la `date`, split supprime le temps (HH MM SS)
-- Warning
-  - Utilise `suppressHydrationWarning` dans un élément html
-    - Doc : https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
+`shadcn` étant configuré avec le composant `Toogle` permettant de gérer le `darkmode`, tu vas devoir l’utiliser sur la page d’accueil et de l’application. Tu vas devoir modifier le Root `Layout` pour que le thème de `Shadcn` soit pris en compte ainsi que la page d’accueil.
 
-<aside>
-💡 Rafraichie la page (F5) et navigue pour voir la différence de comportement
-
-</aside>
+Suis simplement les instructions dans `page.exercice.tsx` et `layout.exercice.tsx`
 
 Fichiers
 
-- `exercises/hydration/client-component.tsx`
+- `src/app/page.tsx`
+- `src/app/layout.tsx`
 
 ## Bonus
 
-### 1. 🚀 render après hydration
+### 1. 🚀 Générer le Root Node
 
-Dans l’exercice précédent nous avons corrigé les erreurs d’hydrations mais les comportements ne sont pas ceux que nous souhaitons.
-
-- La Date a du être tronquée (or nous voulons afficher une vrai `date and time`)
-- Le rendu est bleu (serveur) or il devrait être rouge (client)
-
-Il manque une dernière étape (si le rendu client diffère du serveur), il manque un rendering. Il faut garder ce schéma en tête
-
-```tsx
-SSR -> Client Loading -> Hydration -> CSR (useEffect)
-// utilise le composant <Phases> pour logger les differentes phases
-```
-
-Pour effectuer un rendu supplémentaire ET qui ne pose pas de problème de d’hydratation il est possible d’utiliser
-
-```tsx
-const [hydrated, setHydrated] = useState(false)
-...
-useEffect(() => {
-  setHydrated(true)
-}, [])
-
- return <div>{hydrated? 'This is never prerendered' : 'Prerendered'}</div>
-```
-
-### Explication
-
-- Lors du SSR `hydrated` est `false`
-- Lors de l’hydratation `hydrated` est toujours à `false` (pas d’erreur)
-- Après hydratation nous utilisons `useEffect` pour effectuer `en re-render`
-
-🐶 Utilise cet technique pour afficher correctement la Date et le Style (blue/Red) en te basant sur `hydrated`.
-
-- Remet : **🤖**`const date = new Date().toString()`
-
-ps : tu peux supprimer `suppressHydrationWarning` car il ne devrait pas y avoir de warning sur le style
+Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
 
 Fichiers
 
-- `exercises/hydration/client-component.tsx`
+- `exercise/about/page`
+
+### 2. 🚀 Bonus 2
+
+2Plutôt que d’avoir le nœud `root` dans le code HTML, voyez si vous pouvez créer celui-ci en utilisant également JavaScript.
+
+Fichiers
+
+- `exercise/about/page`
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/docs/messages/react-hydration-error](https://nextjs.org/docs/messages/react-hydration-error)
+📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
 
 ## Ils vont t’aider
 
@@ -155,7 +80,3 @@ Fichiers
 - **🚀 Julia La roquette** : _Julia te donnera des défis supplémentaires._
 - **⛏️ Hulk le Marteau** : _Quand du code à supprimer est présent_
 - **👨‍✈️ Hugo le chef de projet** : _Va t'aider sur les spécifications du projet_
-
-## 🐜 Feedback
-
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=Rendering%20Avancée&entry.533578441=08%20hydration).
