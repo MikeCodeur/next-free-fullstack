@@ -5,9 +5,9 @@
 
 const Page = () => {
   // Ton code ici
-  // 1. Appelle getUserByEmail avec l'email 'user@gmail.com'
-  // 2. Affiche le nom de l'utilisateur dans le JSX
-  // 3. Ajoute un console.log pour déboguer
+  // 1. Appelle `getUserByEmail` avec l'email `user@gmail.com`
+  // 2. Affiche le nom de l'utilisateur dans le `JSX`
+  // 3. Ajoute un `console.log` pour déboguer
 
   return (
     <div>
