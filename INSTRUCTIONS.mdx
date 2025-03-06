@@ -1,6 +1,6 @@
-# Server Action
+# RSC : Appeler une base de données coté backend
 
-### 💡 Comprendre les server Actionb
+### 💡 Description longue de l'exercice
 
 ## 📝 Tes notes
 
@@ -8,77 +8,27 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Les **Server Actions** sont une fonctionnalité puissante de Next.js qui permet d'exécuter du code côté serveur directement depuis un composant React, sans passer par une API externe. Contrairement aux API Routes traditionnelles, elles simplifient la gestion des actions serveur comme l'accès à une base de données, l'authentification ou l'envoi d'e-mails, tout en optimisant les performances grâce à l'exécution côté backend.
+Nous avons vu que les **React Server Components** s'exécutent côté serveur (backend). Cela signifie que nous pouvons directement interagir avec une base de données depuis nos composants React, sans avoir à passer par une API intermédiaire.
 
-Dans ce module, nous allons découvrir comment utiliser efficacement les Server Actions pour traiter des requêtes côté serveur, interagir avec une base de données et améliorer l'expérience utilisateur en réduisant le code nécessaire côté client.
+Dans cet exercice, nous allons justement exploiter cette capacité. Pour simplifier la gestion des données, nous utiliserons **LowDB**, une base de données légère qui stocke les informations sous forme de fichier **JSON** sur le serveur. LowDB inclut déjà les fonctions CRUD nécessaires pour manipuler la table `user`, ce qui nous fera gagner du temps.
 
-Exemple
+De base nous avons 2 user : `user@gmail.com` et `admin@gmail.com`
 
-```tsx
-// app/actions.ts
-'use server'
-
-import {db} from '@/lib/db' // Supposons que db soit une instance de ta base de données
-
-export async function addUser(name: string, email: string) {
-  await db.user.create({
-    data: {name, email},
-  })
-}
-```
-
-```tsx
-'use client'
-
-import {useState} from 'react'
-import {addUser} from '@/app/actions'
-
-export default function UserForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    await addUser(name, email)
-    alert('Utilisateur ajouté !')
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Nom"
-      />
-      <input
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <button type="submit">Ajouter</button>
-    </form>
-  )
-}
-```
-
-📑 Le liens vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+📑 Le liens vers la doc lowDb https://github.com/typicode/lowdb
 
 ## Exercice
 
-Implémente le formulaire et le server action qui appelle la base de données.
-
-- Pense a vérifier les données en entrées
-- Pense a fournir un code retour
+Dans cet exercice tu vas devoir appeler `getUserByEmail('user@gmail.com')` dans un composant React.
 
 Fichiers
 
-- `/app/server-action/page`
+- `app/rsc-bdd/page`
 
 ##
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
 
 ## Ils vont t’aider
 
