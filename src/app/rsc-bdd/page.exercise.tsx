@@ -3,7 +3,7 @@
 
 //import {getUserByEmail} from '@/db'
 
-const Page = async () => {
+const Page = () => {
   // Ton code ici
   // 1. Appelle getUserByEmail avec l'email 'user@gmail.com'
   // 2. Affiche le nom de l'utilisateur dans le JSX
