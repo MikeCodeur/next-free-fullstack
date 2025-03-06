@@ -1,12 +1,12 @@
 // 👨‍✈️ Spécification : Nous allons créer un formulaire qui utilise une Server Action pour créer un utilisateur
-// 🐶 Ajoute 'use client' car nous utilisons des événements du navigateur
+// 🐶 Ajoute `use client` car nous utilisons des événements du navigateur
 // 🤖 Ajoute : 'use client'
 
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 
-// 🐶  Importe la Server Action et useState
+// 🐶  Importe la `Server Action` et `useState`
 // 🤖 Ajoute :
 // import { addUser } from './actions'
 // import { useState } from 'react'
@@ -19,13 +19,13 @@ export default function Page() {
   // const [email, setEmail] = useState('user@gmail.com')
 
   // 🐶 Cinquième étape : Crée la fonction de soumission du formulaire
-  // 🤖 Ajoute la fonction handleSubmit qui appelle addUser
+  // 🤖 Ajoute la fonction `handleSubmit` qui appelle `addUser`
 
   return (
     <div className="p-8">
-      <h1 className="mb-4 text-2xl font-bold">Crééer un utilisateur</h1>
+      <h1 className="mb-4 text-2xl font-bold">Créer un utilisateur</h1>
 
-      {/* 🐶 Sixième étape : Crée le formulaire avec les composants shadcn/ui */}
+      {/* 🐶 Sixième étape : Crée le formulaire avec les composants `shadcn/ui` */}
       <form className="space-y-4">
         <div>
           <Label htmlFor="email">Email</Label>
